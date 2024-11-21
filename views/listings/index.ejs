@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanNest</title>
-</head>
-<body>
-    <h3>All Listings</h3>
-    <form action="/listings/new" method="GET">
-        <button type="submit">Create new Listing</button>
-    </form>
-    <ul>
-        <% for(let list of alllist ){ %>
-            <li>
-                <a href="/listings/<%= list._id %>"><%= list.title %></a>                
-            </li>
+<% layout("/layouts/boilerplate") %>
 
+    <body>
 
-        <% } %>
-    </ul>
-</body>
-</html>
+        <!-- <h3>All Listings</h3> -->
+
+        <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1  ">
+            <% for(let list of alllist ){ %>
+                <a href="/listings/<%= list._id %>" class="list-link">
+                <div class="card index-card col">
+                    <img src="<%= list.image %>" class="card-img-top" alt="image">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text card-list-title">
+                            <%= list.title %>
+                        </p>
+                        <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
+                        </p>
+                    </div>
+                </div>
+            </a>
+                <% } %>
+        </div>
+    </body>

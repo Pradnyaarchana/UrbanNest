@@ -5,12 +5,16 @@ const port = 8080;
 const MONGO_URL = "mongodb://127.0.0.1:27017/urbannest";
 const Listing = require("./models/listing.js");
 const path = require("path");
-const methodOverride = require("method-override");
+const methodOverride = require("method-override"); //for put and delete
+const ejsMate = require("ejs-mate");
 
 app.set("view engine","ejs");
 app.set("views", path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname,"public")));
+
 main()
     .then(()=>{
         console.log("Connected to DB");

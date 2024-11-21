@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanNest</title>
-</head>
-<body>
-    <h3><%= list.title %></h3>
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+
+
+        <div class="show-list row mt-3 mb-3">
+            <div class="card col-6 offset-2 show-card ">
+
+                <img class="card-img-top show-img" src="<%= list.image %>" alt="Card image cap">
+
+                <div class="card-body">
+                    <h5 class="card-title ">
+                        <%= list.title %>
+                    </h5>
+                    <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                     <ul>
+                    <li><p class="card-text"><%= list.description %></p> </li>
+                    <li><p class="card-text">&#8377;<%= list.price %></p> </li>
+                    <li><p class="card-text"><%= list.location %></p> </li>
+                    <li><p class="card-text"><%= list.country %></p> </li>
+                </ul>
+                    <div class="show-btns">
+
+                        <a href="/listings/<%= list._id %>/edit" class="show-btn btn btn-dark ">Edit</a>
+
+
+
+                        <form action="/listings/<%= list._id %>?_method=DELETE" method="post" >
+                            <button class="btn-dark btn show-btn">Delete</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <h3><%= list.title %></h3>
     <ul>
         <li><%= list.description %></li>
         <li>&#8377;<%= list.price.toLocaleString("en-IN") %></li>
@@ -16,6 +45,5 @@
         <form action="/listings/<%= list._id %>?_method=DELETE" method="post">
         <button>Delete this Listing</button>
         </form>
-    </ul>
-</body>
-</html>
+    </ul> -->
+    </body>
