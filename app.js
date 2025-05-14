@@ -1,12 +1,21 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const port = 8080;
+const port = 3000;
 const MONGO_URL = "mongodb://127.0.0.1:27017/urbannest";
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override"); //for put and delete
 const ejsMate = require("ejs-mate");
+const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+const LocalStrategy = require("passport-local");
+const User =  require("./models/user.js");
+const passport = require("passport");
+
+const listingsRouter =  require("./routes/listing.js");
+const reviewsRouter =  require("./routes/review.js");
+const userRouter =  require("./routes/user.js");
 
 app.set("view engine","ejs");
 app.set("views", path.join(__dirname,"views"));
@@ -29,70 +38,60 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
+const sessionOptions = {
+    secret: "secretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+};
+
 app.get("/", (req, res)=>{
     res.send("working");
 });
 
-// app.get("/testlisting", async (req, res)=>{
-//     let listingsample = new Listing({
-//         title:"My new Villa",
-//         description: "By the beach",
-//         price: 2400,
-//         location: "Nashik",
-//         country: "India"
-//     });
-//     await listingsample.save();
-//     console.log("successful");
-//     res.send("Successful");
-// })
+app.use(session(sessionOptions));
+app.use(flash());
 
-app.get("/listings", async (req,res)=>{
-    const alllist = await Listing.find({});
-    res.render("listings/index.ejs",{alllist});
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
+    next();
 });
 
-app.post("/listings", async (req,res)=>{
-    // let {title, description,  image, price, location, country  } = req.body
-    // res.render("listings/index.ejs",{alllist});
-    const newListing = new Listing(req.body.list);
-    await newListing.save();
-    res.redirect("/listings");
-});
+// app.get("/demouser", async (req, res)=> {
+//     let fakeuser = new User({
+//         email:"student@gmail.com",
+//         username:"student"
+// });
+// const registered = await User.register(fakeuser, "hellopass"); 
+// res.send(registered);
+// });
 
-app.get("/listings/new", (req,res)=>{
-    res.render("listings/new.ejs");
-});
+app.use("/listings", listingsRouter);
+app.use("listings/:id/reviews", reviewsRouter); // here use merge params to use id parameter
+app.use("/", userRouter);
 
-
-
-//edit route
-app.get("/listings/:id/edit", async (req,res)=>{
-    let {id} = req.params;
-    const list = await Listing.findById(id);
-    res.render("listings/edit.ejs",{list});
-});
-
-//update route
-app.put("/listings/:id", async (req,res)=>{
-    let {id} = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.list});
-    res.redirect(`/listings/${id}`);
-
-})
-app.get("/listings/:id", async (req,res)=>{
-    let {id} = req.params;
-    const list = await Listing.findById(id);
-    res.render("listings/show.ejs",{list});
-});
-
-app.delete("/listings/:id", async(req, res)=>{
-    let {id} = req.params;
-    let deletedList = await Listing.findByIdAndDelete(id, {...req.body.list});
-    console.log(deletedList);
-    res.redirect("/listings");
+app.all("*", (req,res,next)=>{
+    next(new ExpressError(404, "Page not found"));
 })
 
+app.use((err, req, res, next)=>{
+    let{ statusCode = 500, message = "Something went wrong"} = err;
+    res.status(statusCode).render("error.ejs", {message});
+    // res.status(statusCode).send(message);
+    // res.send("Error Occurred!!");
+})
 
 
 app.listen(port, ()=>{
