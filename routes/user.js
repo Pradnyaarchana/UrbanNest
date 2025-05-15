@@ -5,51 +5,26 @@ const wrapAsync = require('../utils/wrapAsync.js');
 const passport = require('passport');
 const { saveRedirectUrl } = require('../middleware.js');
 
+const userController = require('../controllers/users.js');
 
-router.get('/signup', (req, res) => {
-    res.render('users/signup.ejs');
-});
+router.route('/signup')
+    .get(userController.renderSignup)
+    .post(wrapAsync(userController.signup));
 
-router.post('/signup', wrapAsync(async (req, res) => {
-    try{
-        let { username, email, password } = req.body;
-    const user = new User({ username, email });
-    const registered = await User.register(user, password);
-    console.log(registered);
-    req.flash('success', 'Welcome to the UrbanNest!');
-    res.redirect('/listings'); 
-    }
-    catch (e) {
-        req.flash('error', e.message);
-        res.redirect('/signup');
-    }
-    
-}));
 
-router.get('/login', (req, res) => {
-    res.render('users/login.ejs');
-});
-
-router.post('/login', 
+router.route('/login')
+    .get((userController.renderLogin))
+    .post(
     saveRedirectUrl,
     passport.authenticate("local",{
         failureRedirect:'/login', 
         failureFlash:true
     }), 
-    async (req, res) => {
-    req.flash('success', 'Welcome back!');
-    res.redirect(res.locals.redirectUrl || '/listings');
-});
+    userController.login
+);
 
-router.get('/logout', (req, res,next) => {
-    req.logOut((err)=> {
-        if (err) {
-            return next(err);
-        }
-        req.flash('success', 'You are are logged out!');
-        res.redirect('/listings');
-    })
-}
+
+router.get('/logout', (userController.logout)
 );
 
 

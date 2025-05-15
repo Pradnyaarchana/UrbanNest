@@ -79,7 +79,7 @@ app.use((req, res, next) => {
 // });
 
 app.use("/listings", listingsRouter);
-app.use("listings/:id/reviews", reviewsRouter); // here use merge params to use id parameter
+app.use("/listings/:id/reviews", reviewsRouter); // here use merge params to use id parameter
 app.use("/", userRouter);
 
 app.all("*", (req,res,next)=>{
