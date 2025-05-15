@@ -1,17 +1,22 @@
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const port = 3000;
-const MONGO_URL = "mongodb://127.0.0.1:27017/urbannest";
 const path = require("path");
-const methodOverride = require("method-override"); //for put and delete
+const methodOverride = require("method-override"); 
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongo");
 const flash = require("connect-flash");
 const LocalStrategy = require("passport-local");
 const User =  require("./models/user.js");
 const passport = require("passport");
+const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/urbannest";
 
 const listingsRouter =  require("./routes/listing.js");
 const reviewsRouter =  require("./routes/review.js");
@@ -35,11 +40,21 @@ main()
 
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
+
+const store = MongoDBStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter: 24 * 3600 // time period in seconds
+});
+
 const sessionOptions = {
-    secret: "secretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -49,12 +64,16 @@ const sessionOptions = {
     },
 };
 
-app.get("/", (req, res)=>{
-    res.send("working");
+// app.get("/", (req, res)=>{
+//     res.send("working");
+// });
+
+store.on("error", function(e){
+    console.log("Mongo Session store error", e);
 });
 
 app.use(session(sessionOptions));
-app.use(flash());
+app.use(flash());   
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -1,40 +1,38 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./reviews.js");
+const { urlencoded } = require("express");
 
 const listingSchema = new Schema({
     title: {
-        type:String,
+        type: String,
         required: true
     },
     description: String,
     image: {
-        type:String,
-        default:"https://www.istockphoto.com/stock-photos/nature-and-landscapes",
-        set: (v) => 
-        v === "" 
-            ? "https://www.istockphoto.com/stock-photos/nature-and-landscapes"
-            : v,
+       url: String,
+         filename: String
     },
+    categories: [String],
     price: Number,
     location: String,
     country: String,
     reviews: [
         {
-            type : Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "reviews",
         },
     ],
 
-    owner:{
+    owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
     }
 });
 
-listingSchema.post("findOneAndDelete", async(listing)=>{
-    if(listing){
-        await Review.deleteMany({_id: {$in : listing.reviews}});
+listingSchema.post("findOneAndDelete", async (listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
     }
 })
 
