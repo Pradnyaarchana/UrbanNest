@@ -28,9 +28,9 @@
                 <div><i class="fa-solid fa-house"></i></div>
                 <p>Villa</p>
             </a>
-            <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
+            <a href="/listings?category=camping" class="filter <%= activeCategory === 'camping' ? 'active' : '' %>">
                 <div><i class="fa-solid fa-campground"></i></div>
-                <p>Cabins</p>
+                <p>Camping</p>
             </a>
         </div>
 
@@ -51,4 +51,12 @@
                 </a>
                 <% } %>
         </div>
+
+        <style>
+        .filter.active {
+            font-weight: bold;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+        </style>
     </body>
