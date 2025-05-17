@@ -3,7 +3,6 @@ body{
     flex-direction: column;
     min-height: 100vh;
     font-family: 'montserrat';
-    padding-top: 70px;
 }
 .container{
     flex: 1;
@@ -167,7 +166,7 @@ padding-left: 0%;
 .search-input{
     border-radius: 25px;
     text-align: center;
-    max-width:  120px;
+    max-width:  300px;
 }
 
 .btn-search:hover{
