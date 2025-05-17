@@ -3,6 +3,7 @@ body{
     flex-direction: column;
     min-height: 100vh;
     font-family: 'montserrat';
+    padding-top: 70px;
 }
 .container{
     flex: 1;
@@ -30,7 +31,7 @@ h2{
     color: rgb(228, 3, 3);
 }
 .container-fluid{
-    height: 50px;
+    min-height: 50px;
 }
 
 .f-info{
