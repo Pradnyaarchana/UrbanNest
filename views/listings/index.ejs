@@ -2,95 +2,53 @@
 
 <% layout("/layouts/boilerplate") %>
 
-<body>
-    <!-- Search Bar (always visible) -->
-    <div class="container my-3">
-        <form action="/listings" class="d-flex" role="search" method="GET">
-            <input type="search" name="q" class="form-control me-2 search-input" placeholder="Search destinations" aria-label="Search">
-            <button class="btn btn-search ms-2" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i> Search
-            </button>
-        </form>
-    </div>
 
-    <!-- Filter Toggler for Mobile -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterBar" aria-controls="filterBar" aria-expanded="false" aria-label="Toggle filters">
-                <span class="navbar-toggler-icon"></span> Filters
-            </button>
-            <div class="collapse navbar-collapse" id="filterBar">
-                <div id="filters" class="d-flex flex-wrap">
-                    <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-fire"></i></div>
-                        <p>Trending</p>
-                    </a>
-                    <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-bed"></i></div>
-                        <p>Rooms</p>
-                    </a>
-                    <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-mountain-sun"></i></div>
-                        <p>Mountains</p>
-                    </a>
-                    <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-water-ladder"></i></div>
-                        <p>Pools</p>
-                    </a>
-                    <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-house"></i></div>
-                        <p>Villa</p>
-                    </a>
-                    <a href="/listings?category=camping" class="filter <%= activeCategory === 'camping' ? 'active' : '' %>">
-                        <div><i class="fa-solid fa-campground"></i></div>
-                        <p>Camping</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <body>
 
-    <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
-        <% for(let list of alllist ){ %>
-            <a href="/listings/<%= list._id %>" class="list-link">
-                <div class="card index-card col">
-                    <img src="<%= list.image.url %>" class="card-img-top" alt="image">
-                    <div class="card-img-overlay"></div>
-                    <div class="card-body">
-                        <p class="card-text card-list-title">
-                            <%= list.title %>
-                        </p>
-                        <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
-                        </p>
-                    </div>
-                </div>
+        <!-- <h3>All Listings</h3> -->
+
+        <div id="filters">
+            <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Trending</p>
             </a>
-        <% } %>
-    </div>
+            <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </a>
+            <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-mountain-sun"></i></div>
+                <p>Mountains</p>
+            </a>
+            <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-water-ladder"></i></div>
+                <p>Pools</p>
+            </a>
+            <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-house"></i></div>
+                <p>Villa</p>
+            </a>
+            <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Cabins</p>
+            </a>
+        </div>
 
-    <style>
-    #filters .filter {
-        margin: 0.5rem 0.5rem 0.5rem 0;
-        text-align: center;
-        min-width: 90px;
-    }
-    @media (max-width: 991.98px) {
-        #filters {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-        }
-        #filters .filter {
-            width: 100%;
-            margin: 0.25rem 0;
-        }
-        .navbar-collapse {
-            margin-top: 1rem; /* Adds space below the search bar when toggler expands */
-        }
-    }
-    .filter.active {
-        font-weight: bold;
-        color: #007bff;
-        border-bottom: 2px solid #007bff;
-    }
-    </style>
-</body>
+        <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2  ">
+            <% for(let list of alllist ){ %>
+                <a href="/listings/<%= list._id %>" class="list-link">
+                    <div class="card index-card col">
+                        <img src="<%= list.image.url %>" class="card-img-top" alt="image">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text card-list-title">
+                                <%= list.title %>
+                            </p>
+                            <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+    </body>

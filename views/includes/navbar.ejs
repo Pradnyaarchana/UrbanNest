@@ -1,27 +1,26 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary sticky-top " >
+<nav class="navbar navbar-expand-md bg-body-tertiary sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/listings"><i class="fa-solid fa-location-dot logo"></i> <b>UrbanNest</b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button> 
+        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/listings">Explore</a>
                 </li>
             </ul>
 
-            <div class="navbar-nav ms-auto">
-                <form action="/listings" class="d-flex" role="search" method="GET">
-                    <input type="search" name="q" class="form-control me-2 search-input" placeholder="Search destinations" aria-label="Search">
-                    <button class="btn btn-search" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>Search
-                    </button>
-                </form>
-            </div>
+            <!-- Move search form here, use ms-md-auto to push it right on desktop -->
+            <form action="/listings" class="d-flex ms-md-auto my-2 my-md-0" role="search" method="GET">
+                <input type="search" name="q" class="form-control me-2 search-input" placeholder="Search destinations" aria-label="Search">
+                <button class="btn btn-search" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>Search
+                </button>
+            </form>
 
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="/listings/new">Add New</a>
                 </li>
