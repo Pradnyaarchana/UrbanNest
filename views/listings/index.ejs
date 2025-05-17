@@ -2,64 +2,61 @@
 
 <% layout("/layouts/boilerplate") %>
 
-<body>
-    <!-- Always-visible Search Bar -->
-    <div class="container my-3">
-        <form action="/listings" class="d-flex justify-content-center" role="search" method="GET">
-            <input type="search" name="q" class="form-control me-2 search-input" style="max-width:300px;" placeholder="Search destinations" aria-label="Search">
-            <button class="btn btn-search ms-2" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i> Search
-            </button>
-        </form>
-    </div>
 
-    <!-- Filters Row -->
-    <div id="filters" class="d-flex flex-wrap justify-content-center my-3">
-        <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
-            <div><i class="fa-solid fa-fire"></i></div>
-            <p>Trending</p>
-        </a>
-        <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
-            <div><i class="fa-solid fa-bed"></i></div>
-            <p>Rooms</p>
-        </a>
-        <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
-            <div><i class="fa-solid fa-mountain-sun"></i></div>
-            <p>Mountains</p>
-        </a>
-        <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
-            <div><i class="fa-solid fa-water-ladder"></i></div>
-            <p>Pools</p>
-        </a>
-        <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
-            <div><i class="fa-solid fa-house"></i></div>
-            <p>Villa</p>
-        </a>
-        <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
-            <div><i class="fa-solid fa-campground"></i></div>
-            <p>Cabins</p>
-        </a>
-    </div>
+    <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <% for(let list of alllist ){ %>
-                <div class="col-12 col-sm-8 col-md-6 col-lg-4 d-flex justify-content-center mb-4">
-                    <a href="/listings/<%= list._id %>" class="list-link" style="width:100%;">
-                        <div class="card index-card">
-                            <img src="<%= list.image.url %>" class="card-img-top" alt="image">
-                            <div class="card-img-overlay"></div>
-                            <div class="card-body">
-                                <p class="card-text card-list-title">
-                                    <%= list.title %>
-                                </p>
-                                <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            <% } %>
+        <div class="navbar-nav ms-auto">
+                <form action="/listings" class="d-flex" role="search" method="GET">
+                    <input type="search" name="q" class="form-control me-2 search-input" placeholder="Search destinations" aria-label="Search">
+                    <button class="btn btn-search" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>Search
+                    </button>
+                </form>
+            </div>
+        <!-- <h3>All Listings</h3> -->
+
+        <div id="filters">
+            <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Trending</p>
+            </a>
+            <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </a>
+            <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-mountain-sun"></i></div>
+                <p>Mountains</p>
+            </a>
+            <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-water-ladder"></i></div>
+                <p>Pools</p>
+            </a>
+            <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-house"></i></div>
+                <p>Villa</p>
+            </a>
+            <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Cabins</p>
+            </a>
         </div>
-    </div>
-</body>
+
+        <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2  ">
+            <% for(let list of alllist ){ %>
+                <a href="/listings/<%= list._id %>" class="list-link">
+                    <div class="card index-card col">
+                        <img src="<%= list.image.url %>" class="card-img-top" alt="image">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text card-list-title">
+                                <%= list.title %>
+                            </p>
+                            <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+    </body>

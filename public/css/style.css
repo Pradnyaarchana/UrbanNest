@@ -137,8 +137,6 @@ padding-left: 0%;
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
 }
 
 .filter {
@@ -188,13 +186,12 @@ padding-left: 0%;
 
 @media (max-width: 991.98px) {
     #filters {
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
         width: 100%;
     }
     #filters .filter {
-        width: auto;
-        margin: 0.25rem 0.5rem;
+        width: 100%;
+        margin: 0.25rem 0;
     }
 }
