@@ -7,7 +7,7 @@
 
         <!-- <h3>All Listings</h3> -->
 
-        <div id="filters">
+        <div id="filters" class="d-flex flex-wrap justify-content-center my-3">
             <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
                 <div><i class="fa-solid fa-fire"></i></div>
                 <p>Trending</p>
@@ -34,21 +34,25 @@
             </a>
         </div>
 
-        <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2  ">
-            <% for(let list of alllist ){ %>
-                <a href="/listings/<%= list._id %>" class="list-link">
-                    <div class="card index-card col">
-                        <img src="<%= list.image.url %>" class="card-img-top" alt="image">
-                        <div class="card-img-overlay"></div>
-                        <div class="card-body">
-                            <p class="card-text card-list-title">
-                                <%= list.title %>
-                            </p>
-                            <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
-                            </p>
-                        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <% for(let list of alllist ){ %>
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 d-flex justify-content-center mb-4">
+                        <a href="/listings/<%= list._id %>" class="list-link" style="width:100%;">
+                            <div class="card index-card">
+                                <img src="<%= list.image.url %>" class="card-img-top" alt="image">
+                                <div class="card-img-overlay"></div>
+                                <div class="card-body">
+                                    <p class="card-text card-list-title">
+                                        <%= list.title %>
+                                    </p>
+                                    <p class="card-text">&#8377;<%= list.price.toLocaleString("en-IN") %>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
                 <% } %>
+            </div>
         </div>
     </body>
