@@ -114,5 +114,5 @@ app.use((err, req, res, next)=>{
 
 
 app.listen(port, ()=>{
-    console.log("listening on post ",port);
+    console.log("listening on port ",port);
 } );

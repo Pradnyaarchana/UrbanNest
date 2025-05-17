@@ -7,32 +7,41 @@
 
         <!-- <h3>All Listings</h3> -->
 
-        <div id="filters">
-            <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
-                <div><i class="fa-solid fa-fire"></i></div>
-                <p>Trending</p>
-            </a>
-            <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
-                <div><i class="fa-solid fa-bed"></i></div>
-                <p>Rooms</p>
-            </a>
-            <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
-                <div><i class="fa-solid fa-mountain-sun"></i></div>
-                <p>Mountains</p>
-            </a>
-            <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
-                <div><i class="fa-solid fa-water-ladder"></i></div>
-                <p>Pools</p>
-            </a>
-            <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
-                <div><i class="fa-solid fa-house"></i></div>
-                <p>Villa</p>
-            </a>
-            <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
-                <div><i class="fa-solid fa-campground"></i></div>
-                <p>Cabins</p>
-            </a>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterBar" aria-controls="filterBar" aria-expanded="false" aria-label="Toggle filters">
+                    <span class="navbar-toggler-icon"></span> Filters
+                </button>
+                <div class="collapse navbar-collapse" id="filterBar">
+                    <div id="filters" class="d-flex flex-wrap">
+                        <a href="/listings" class="filter <%= !activeCategory ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-fire"></i></div>
+                            <p>Trending</p>
+                        </a>
+                        <a href="/listings?category=rooms" class="filter <%= activeCategory === 'rooms' ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-bed"></i></div>
+                            <p>Rooms</p>
+                        </a>
+                        <a href="/listings?category=mountains" class="filter <%= activeCategory === 'mountains' ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-mountain-sun"></i></div>
+                            <p>Mountains</p>
+                        </a>
+                        <a href="/listings?category=pools" class="filter <%= activeCategory === 'pools' ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-water-ladder"></i></div>
+                            <p>Pools</p>
+                        </a>
+                        <a href="/listings?category=villa" class="filter <%= activeCategory === 'villa' ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-house"></i></div>
+                            <p>Villa</p>
+                        </a>
+                        <a href="/listings?category=cabins" class="filter <%= activeCategory === 'cabins' ? 'active' : '' %>">
+                            <div><i class="fa-solid fa-campground"></i></div>
+                            <p>Cabins</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
         <div class="index row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2  ">
             <% for(let list of alllist ){ %>

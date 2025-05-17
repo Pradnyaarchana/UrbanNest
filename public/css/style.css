@@ -180,3 +180,14 @@ padding-left: 0%;
             display: inline;
             margin-right: 0.8rem;
         }
+
+@media (max-width: 991.98px) {
+    #filters {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    #filters .filter {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+}
