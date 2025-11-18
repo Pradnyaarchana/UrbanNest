@@ -32,8 +32,12 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl, {
+        tls: true,
+        serverSelectionTimeoutMS: 5000
+    });
 }
+
 
 // MongoDB session store
 const store = MongoDBStore.create({
